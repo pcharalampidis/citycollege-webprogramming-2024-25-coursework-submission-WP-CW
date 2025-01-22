@@ -1,0 +1,93 @@
+.orders-table {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.order-id {
+    font-weight: 600;
+    color: #495057;
+}
+
+.status-badge {
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+}
+
+.order-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.order-actions .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.table-responsive {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    color: #495057;
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.pagination {
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    padding: 0.5rem 1rem;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+}
+
+.alert-info {
+    border-left: 4px solid #17a2b8;
+}
+
+.order-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.store-name {
+    font-weight: 500;
+    color: #495057;
+}
+
+.quantity-cell {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        border: 0;
+        box-shadow: none;
+    }
+    
+    .order-actions {
+        flex-direction: column;
+    }
+    
+    .order-actions .btn {
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+}

@@ -1,0 +1,217 @@
+/* Products Page Styles */
+.products-container {
+    padding: 2rem 0;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #424242;
+}
+
+.product-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1565c0;
+    margin-bottom: 0.5rem;
+}
+
+.product-stock {
+    color: #616161;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.product-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Filters and Search */
+.filters-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.search-box {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9e9e9e;
+}
+
+.filter-group {
+    margin-bottom: 1rem;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #616161;
+    font-weight: 500;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+/* Stock Status Badges */
+.stock-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.in-stock { background: #e8f5e9; color: #2e7d32; }
+.low-stock { background: #fff3e0; color: #e65100; }
+.out-stock { background: #fbe9e7; color: #d32f2f; }
+
+/* Product Tabs Styling */
+:root {
+    --primary-color: #2b0d63;
+    --primary-hover: #1f0947;
+    --secondary-color: #fbca1f;
+    --secondary-hover: #fbb91f;
+    --text-dark: #2b0d63;
+    --text-muted: #666;
+    --light-bg: #f8f8f8;
+    --border-color: rgba(0, 0, 0, 0.08);
+}
+
+.product-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.product-tab {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    text-decoration: none;
+}
+
+.product-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.product-tab:hover {
+    color: var(--secondary-color);
+}
+
+.product-tab:hover::after {
+    background-color: var(--secondary-color);
+}
+
+.product-tab.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.product-tab.active::after {
+    background-color: var(--primary-color);
+}
+
+/* Add Product Button */
+.add-product-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #2962ff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.add-product-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-section {
+        margin-bottom: 1rem;
+    }
+
+    .add-product-btn {
+        bottom: 1rem;
+        right: 1rem;
+    }
+}

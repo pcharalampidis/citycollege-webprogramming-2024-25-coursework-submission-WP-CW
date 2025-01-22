@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+    <div class="mb-4">
+        <a href="/orders" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Orders
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Order #<%= order.Order_ID %></h2>
+                <span class="badge <%= order.Status === 'Pending' ? 'bg-warning' : 
+                                    order.Status === 'Processing' ? 'bg-info' :
+                                    order.Status === 'Shipped' ? 'bg-primary' :
+                                    order.Status === 'Delivered' ? 'bg-success' : 'bg-danger' %>">
+                    <%= order.Status %>
+                </span>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <div class="row">
+                <!-- Product Image and Details -->
+                <div class="col-md-4 mb-4">
+                    <img src="<%= order.Image_URL %>" alt="<%= order.ProductName %>" 
+                         class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
+                </div>
+                
+                <div class="col-md-8">
+                    <h3 class="mb-3"><%= order.ProductName %></h3>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Order Information</h5>
+                            <p><strong>Order Date:</strong> <%= order.Date %></p>
+                            <p><strong>Quantity:</strong> <%= order.Quantity %></p>
+                            <p><strong>Price per Item:</strong> $<%= order.Price.toFixed(2) %></p>
+                            <p><strong>Total Amount:</strong> $<%= order.Total_Amount.toFixed(2) %></p>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5>Store Information</h5>
+                            <p><strong>Store Name:</strong> <%= order.StoreName %></p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Shipping Address</h5>
+                        <p class="mb-0"><%= order.Shipping_Address %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

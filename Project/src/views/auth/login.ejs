@@ -1,0 +1,45 @@
+<div class="auth-container">
+    <div class="auth-box">
+        <div class="auth-header">
+            <h2><i class="fas fa-sign-in-alt me-2"></i>Login</h2>
+        </div>
+
+        <form action="/auth/login" method="POST">
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope me-2"></i>Email
+                </label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock me-2"></i>Password
+                </label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-3 text-center">
+            <p>Don't have an account? <a href="/auth/register">Register</a></p>
+        </div>
+
+        <!-- Seller Section -->
+        <div class="seller-section">
+            <h3><i class="fas fa-store me-2"></i>Are you a Business?</h3>
+            <p>Join our marketplace and start selling your products today!</p>
+            <div class="d-grid gap-2">
+                <a href="/auth/seller/login" class="btn btn-outline-primary">
+                    <i class="fas fa-sign-in-alt me-2"></i>Seller Login
+                </a>
+                <a href="/auth/seller/register" class="btn btn-outline-success">
+                    <i class="fas fa-store me-2"></i>Register Your Business
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

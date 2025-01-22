@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+
+<div class="container py-4">
+    <h1 class="mb-4">Shopping Cart</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Cart Items -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Cart Items</h3>
+                    <div id="cart-items-container">
+                        <!-- Cart items will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <!-- Order Summary -->
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Order Summary</h3>
+                    
+                    <div class="d-flex justify-content-between mb-4">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    
+                    <button id="proceed-to-checkout" class="btn btn-primary w-100 mb-3" disabled>
+                        Proceed to Checkout
+                    </button>
+                    
+                    <a href="/products" class="btn btn-outline-secondary w-100">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<% if (typeof cssFiles === 'undefined') { %>
+    <% cssFiles = [] %>
+<% } %>
+<% cssFiles.push('cart-page') %>
+
+<script src="/js/cart-page.js"></script>

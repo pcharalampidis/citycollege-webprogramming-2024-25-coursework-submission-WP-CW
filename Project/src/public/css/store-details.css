@@ -1,0 +1,151 @@
+.store-details {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.store-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.store-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.store-rating {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+.store-rating .rating-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.store-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+}
+
+.info-item i {
+    color: var(--primary-color);
+}
+
+.store-description {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: var(--card-shadow);
+}
+
+.store-description h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.store-products {
+    margin-bottom: 3rem;
+}
+
+.store-products h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--card-shadow);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.price {
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.stock {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.in-stock {
+    color: #4CAF50;
+}
+
+.out-of-stock {
+    color: #f44336;
+}
+
+.view-btn {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--secondary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.view-btn:hover {
+    background: var(--secondary-hover);
+}
+
+@media (max-width: 768px) {
+    .store-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}

@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Edit Product</h2>
+            <form method="POST" action="/seller/products/edit/<%= product.Product_ID %>?_method=PUT" enctype="multipart/form-data" class="product-form">
+                <input type="hidden" name="_method" value="PUT">
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<%= product.Name %>" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="typeId" class="form-label">Product Type</label>
+                        <select class="form-select" id="typeId" name="typeId" required>
+                            <option value="">Select Type</option>
+                            <% types.forEach(type => { %>
+                                <option value="<%= type.Type_ID %>" <%= type.Type_ID === product.Type_ID ? 'selected' : '' %>>
+                                    <%= type.Type_Name %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="categoryId" class="form-label">Category</label>
+                        <select class="form-select" id="categoryId" name="categoryId" required>
+                            <option value="">Select Category</option>
+                            <% categories.forEach(category => { %>
+                                <option value="<%= category.Category_ID %>" <%= category.Category_ID === product.Category_ID ? 'selected' : '' %>>
+                                    <%= category.Name_Type %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="authorName" class="form-label">Author Name</label>
+                        <input type="text" class="form-control" id="authorName" name="authorName" value="<%= product.Author_Name || '' %>">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" step="0.01" value="<%= product.Price %>" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="stock" name="stock" value="<%= product.Stock %>" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="publicationYear" class="form-label">Publication Year</label>
+                        <input type="number" class="form-control" id="publicationYear" name="publicationYear" value="<%= product.Publication_Year || '' %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="isbn" class="form-label">ISBN</label>
+                        <input type="text" class="form-control" id="isbn" name="isbn" value="<%= product.ISBN || '' %>">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="specification" class="form-label">Specification</label>
+                    <textarea class="form-control" id="specification" name="specification" rows="3"><%= product.Specification || '' %></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required><%= product.Description %></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Product Image</label>
+                    <% if (product.Image_URL) { %>
+                        <div class="mb-2">
+                            <img src="<%= product.Image_URL %>" alt="Current product image" style="max-width: 200px;">
+                        </div>
+                    <% } %>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    <small class="form-text text-muted">Leave empty to keep current image</small>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="/seller/dashboard" class="btn btn-secondary me-md-2">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/seller/dashboard.js"></script>

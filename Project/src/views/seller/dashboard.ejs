@@ -1,0 +1,272 @@
+<!-- Seller Dashboard -->
+<div class="seller-dashboard">
+    <!-- Stats Section -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <h3>Total Orders</h3>
+            <div class="value" id="totalOrdersValue"><%- stats.totalOrders %></div>
+            <div class="trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>12% from last month</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <h3>Revenue</h3>
+            <div class="value" id="revenueValue">$<%- stats.revenue %></div>
+            <div class="trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>8% from last month</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">
+                <i class="fas fa-box"></i>
+            </div>
+            <h3>Products</h3>
+            <div class="value" id="productsValue"><%- stats.products %></div>
+            <div class="trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>5 new this month</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Customers</h3>
+            <div class="value" id="customersValue"><%- stats.customers %></div>
+            <div class="trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>15% from last month</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <a href="/seller/products/add" class="action-card" data-action="add-product">
+            <i class="fas fa-plus"></i>
+            <h4>Add Product</h4>
+            <p>List a new product for sale</p>
+        </a>
+        <a href="/seller/orders" class="action-card" data-action="view-orders">
+            <i class="fas fa-list"></i>
+            <h4>View Orders</h4>
+            <p>Check your recent orders</p>
+        </a>
+        <a href="/seller/settings" class="action-card" data-action="settings">
+            <i class="fas fa-cog"></i>
+            <h4>Settings</h4>
+            <p>Update your store settings</p>
+        </a>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="recent-orders">
+        <div class="header">
+            <h3>Recent Orders</h3>
+            <select class="form-select w-auto" id="timeFilter">
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month" selected>This Month</option>
+            </select>
+        </div>
+        <div class="table-responsive">
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% recentOrders.forEach(function(order) { %>
+                    <tr>
+                        <td>#<%- order.id %></td>
+                        <td><%- order.customer %></td>
+                        <td>$<%- order.amount %></td>
+                        <td>
+                            <span class="status-badge status-<%- order.status.toLowerCase() %>">
+                                <%- order.status %>
+                            </span>
+                        </td>
+                        <td><%- order.date %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <!-- Products Section -->
+        <div class="products-section mt-4">
+            <div class="header d-flex justify-content-between align-items-center mb-3">
+                <h3>Your Products</h3>
+                <div class="actions">
+                    <select class="form-select d-inline-block w-auto me-2" id="productFilter">
+                        <option value="all">All Products</option>
+                        <option value="in-stock">In Stock</option>
+                        <option value="low-stock">Low Stock</option>
+                        <option value="out-of-stock">Out of Stock</option>
+                    </select>
+                    <a href="/seller/products/add" class="btn btn-primary">Add New Product</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="product-table table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <% products.forEach(function(product) { %>
+                        <tr data-product-id="<%= product.Product_ID %>">
+                            <td><img src="<%= product.Image_URL %>" alt="<%= product.Name %>" style="width: 50px; height: 50px;"></td>
+                            <td><%= product.Name %></td>
+                            <td><%= product.Category_Name %></td>
+                            <td>$<%= product.Price %></td>
+                            <td><%= product.Stock %></td>
+                            <td><span class="badge <%= product.Stock > 0 ? 'bg-success' : 'bg-danger' %>"><%= product.Stock > 0 ? 'In Stock' : 'Out of Stock' %></span></td>
+                            <td>
+                                <a href="/seller/products/edit/<%= product.Product_ID %>" class="btn btn-sm btn-primary">Edit</a>
+                                <button onclick="deleteProduct('<%= product.Product_ID %>')" class="btn btn-sm btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this product? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <form id="deleteProductForm" method="POST">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof messages !== 'undefined') { %>
+    <% if (messages.success && messages.success.length > 0) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= messages.success %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+
+    <% if (messages.error && messages.error.length > 0) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= messages.error %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+<% } %>
+
+<script>
+let deleteModal;
+
+document.addEventListener('DOMContentLoaded', function() {
+    deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+});
+
+function deleteProduct(productId) {
+    console.log('Delete button clicked for product:', productId);
+    const form = document.getElementById('deleteProductForm');
+    form.action = `/seller/products/delete/${productId}`;
+    deleteModal.show();
+}
+
+// Handle delete form submission
+document.getElementById('deleteProductForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const productId = this.action.split('/').pop();
+    console.log('Submitting delete request for product:', productId);
+    console.log('Delete form action:', this.action);
+    
+    try {
+        console.log('Sending DELETE request to:', `/seller/products/delete/${productId}`);
+        const response = await fetch(`/seller/products/delete/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        });
+
+        console.log('Delete response status:', response.status);
+        const data = await response.json();
+        console.log('Delete response data:', data);
+        
+        if (response.ok) {
+            // Hide the modal
+            deleteModal.hide();
+            
+            // Remove the product row from the table
+            const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+            if (row) {
+                console.log('Removing row from table');
+                row.remove();
+            } else {
+                console.log('Row not found in table');
+            }
+            
+            // Show success message
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success alert-dismissible fade show';
+            alert.innerHTML = `
+                ${data.message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.querySelector('.container').insertBefore(alert, document.querySelector('.seller-dashboard'));
+            
+            // Refresh the page after a short delay
+            console.log('Scheduling page refresh');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } else {
+            throw new Error(data.error || 'Failed to delete product');
+        }
+    } catch (error) {
+        console.error('Error in delete request:', error);
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-danger alert-dismissible fade show';
+        alert.innerHTML = `
+            Error deleting product: ${error.message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        document.querySelector('.container').insertBefore(alert, document.querySelector('.seller-dashboard'));
+    }
+});
+</script>

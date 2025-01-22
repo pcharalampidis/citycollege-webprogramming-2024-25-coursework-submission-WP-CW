@@ -1,0 +1,147 @@
+/* Auth Pages Common Styles */
+.auth-container {
+    min-height: 100vh;
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+}
+
+.auth-box {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+    color: #2962ff;
+    margin-bottom: 0.5rem;
+}
+
+/* Form Styles */
+.form-section {
+    margin-bottom: 1.5rem;
+}
+
+.form-section h3 {
+    color: #424242;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #616161;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #2962ff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.1);
+}
+
+/* Alert Styles */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.alert i {
+    margin-right: 0.5rem;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+.alert-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    width: 100%;
+}
+
+.btn i {
+    margin-right: 0.5rem;
+}
+
+.btn-primary {
+    background-color: #2962ff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1e4bd8;
+}
+
+.btn-outline-primary {
+    border: 1px solid #2962ff;
+    color: #2962ff;
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    background-color: #2962ff;
+    color: white;
+}
+
+/* Seller Section Styles */
+.seller-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.seller-section h3 {
+    color: #424242;
+    margin-bottom: 0.5rem;
+}
+
+.seller-section p {
+    color: #616161;
+    margin-bottom: 1rem;
+}

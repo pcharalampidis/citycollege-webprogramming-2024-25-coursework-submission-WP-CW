@@ -1,0 +1,148 @@
+/* Cart Page Styles */
+.cart-page {
+    padding: 2rem 0;
+    min-height: calc(100vh - 60px);
+}
+
+/* Cart Items */
+#cart-items-container .alert {
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+#cart-items-container .alert-link {
+    text-decoration: none;
+    font-weight: 600;
+    color: #333;
+}
+
+#cart-items-container .alert-link:hover {
+    text-decoration: underline;
+}
+
+/* Individual Cart Item */
+.cart-item {
+    transition: all 0.2s ease-in-out;
+}
+
+.cart-item img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    padding: 0.5rem;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.quantity-controls button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    background: white;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+}
+
+.quantity-controls button:hover:not(:disabled) {
+    background: #f4e7cc;
+    border-color: #fbca1f;
+}
+
+.quantity-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.quantity-controls .quantity {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Order Summary Card */
+.card {
+    border: none;
+    background-color: #FFF5EE;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #fbca1f;
+    border: 2px solid black;
+    padding: 0.6em 1.3em;
+    font-weight: 700;
+    color: black;
+    border-radius: 0.4em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #ffd747;
+    border-color: black;
+    color: black;
+    transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+    background: #e9ecef;
+    border-color: #dee2e6;
+    color: #6c757d;
+    transform: none;
+}
+
+.btn-outline-secondary {
+    border: 2px solid #6c757d;
+    padding: 0.6em 1.3em;
+    font-weight: 500;
+    color: #6c757d;
+    border-radius: 0.4em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #1f0947;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .cart-item {
+        text-align: center;
+    }
+    
+    .cart-item img {
+        margin-bottom: 1rem;
+    }
+    
+    .quantity-controls {
+        margin: 1rem auto;
+    }
+    
+    .card {
+        margin-top: 2rem;
+    }
+}

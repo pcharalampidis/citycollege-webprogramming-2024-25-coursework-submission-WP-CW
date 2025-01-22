@@ -1,0 +1,86 @@
+<%- contentFor('body') %>
+<!-- welcome user section -->
+<div class="welcome-section text-white p-4 mb-4 rounded" style="background: #1f0947">
+    <div class="container" style="color: #ffc107">
+        <h1>Welcome, <%= locals.user && user.First_Name ? user.First_Name : 'Guest' %>!</h1>
+        <p class="mb-0">Discover your next favorite book or gadget</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- details about products and users -->
+    <div class="row mt-4 mb-3">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Books Available</h3>
+                    <p class="card-text display-4"><%= stats.booksCount %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Partner Stores</h3>
+                    <p class="card-text display-4"><%= stats.storesCount %>+</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Active Users</h3>
+                    <p class="card-text display-4"><%= stats.usersCount %>+</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- the buttons -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <a href="/products" class="btn btn-primary me-2">
+                <i class="fas fa-book me-2"></i>Browse Catalog
+            </a>
+            <a href="/wishlist" class="btn btn-outline-primary ms-2">
+                <i class="fas fa-heart me-2"></i>View Wishlist
+            </a>
+        </div>
+    </div>
+
+    <!-- showcase featured products -->
+    <section class="featured-products">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="row">
+            <% featuredProducts.forEach(product => { %>
+                <div class="col">
+                    <div class="product-card">
+                        <div class="card-img-wrapper">
+                            <img src="<%= product.Image_URL || '/images/default.jpg' %>" 
+                                 onerror="this.src='/images/default.jpg'"
+                                 alt="<%= product.Name %>">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= product.Name %></h5>
+                            <p class="card-text"><%= product.Description %></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">€<%= product.Price.toFixed(2) %></span>
+                                <a href="/products/<%= product.Product_ID %>" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </section>
+</div>
+
+<% if (typeof cssFiles === 'undefined') { %>
+    <% cssFiles = [] %>
+<% } %>
+<% cssFiles.push('user/dashboard') %>
+
+<% if (typeof jsFiles === 'undefined') { %>
+    <% jsFiles = [] %>
+<% } %>
+<% jsFiles.push('user/dashboard') %>

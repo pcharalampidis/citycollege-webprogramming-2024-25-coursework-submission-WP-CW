@@ -1,0 +1,96 @@
+.product-image {
+    max-height: 500px;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.product-badge {
+    font-size: 0.9rem;
+    padding: 0.5em 1em;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.product-description {
+    line-height: 1.6;
+    color: #666;
+}
+
+.specifications {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.store-table {
+    margin-top: 1rem;
+}
+
+.store-table th {
+    background-color: #f8f9fa;
+}
+
+.quantity-input {
+    max-width: 100px;
+}
+
+.review-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.review-card {
+    border-left: 3px solid #007bff;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+.rating-stars {
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding: 0.75rem 0;
+}
+
+.breadcrumb-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d;
+}
+
+.store-availability {
+    font-weight: bold;
+}
+
+.in-stock {
+    color: #28a745;
+}
+
+.low-stock {
+    color: #ffc107;
+}
+
+.out-of-stock {
+    color: #dc3545;
+}

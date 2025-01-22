@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product - Seller Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/seller/products.css">
+    <link rel="stylesheet" href="/css/product-form.css">
+    <style>
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+        .tab-content {
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .nav-tabs .nav-link {
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            display: none;
+        }
+        .file-upload {
+            position: relative;
+            display: inline-block;
+        }
+        .file-upload-label {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .file-upload-label:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+
+        <ul class="nav nav-tabs product-tabs" id="productTabs" role="tablist">
+            <% types.forEach((type, index) => { %>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link product-tab <%= index === 0 ? 'active' : '' %>" 
+                            id="<%= type.Type_Name.toLowerCase() %>-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#<%= type.Type_Name.toLowerCase() %>-form" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="<%= type.Type_Name.toLowerCase() %>-form" 
+                            aria-selected="<%= index === 0 ? 'true' : 'false' %>">
+                        <%= type.Type_Name %>
+                    </button>
+                </li>
+            <% }); %>
+        </ul>
+
+        <div class="tab-content">
+            <% types.forEach((type, index) => { %>
+                <div class="tab-pane fade <%= index === 0 ? 'show active' : '' %>" 
+                     id="<%= type.Type_Name.toLowerCase() %>-form">
+                    <form action="/seller/products/<%= type.Type_ID %>/add" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <input type="hidden" name="productType" value="<%= type.Type_ID %>">
+                        
+                        <!-- Common Fields -->
+                        <div class="form-group">
+                            <label for="productName-<%= type.Type_ID %>" class="required">Product Name</label>
+                            <input type="text" class="form-control" id="productName-<%= type.Type_ID %>" 
+                                   name="productName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category-<%= type.Type_ID %>" class="required">Category</label>
+                            <select class="form-control" id="category-<%= type.Type_ID %>" name="category" required>
+                                <option value="">Select Category</option>
+                                <% categories.filter(cat => cat.Type_ID === type.Type_ID).forEach(cat => { %>
+                                    <option value="<%= cat.Category_ID %>" 
+                                            <%= cat.Name_Type === category ? 'selected' : '' %>>
+                                        <%= cat.Name_Type %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <!-- Type-Specific Fields -->
+                        <% if (type.Type_Name === 'Books') { %>
+                            <div class="form-group">
+                                <label for="authorId" class="required">Author</label>
+                                <select class="form-control" id="authorId" name="authorId" required>
+                                    <option value="">Select Author</option>
+                                    <% authors.forEach(author => { %>
+                                        <option value="<%= author.Author_ID %>"><%= author.Name %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="isbn" class="required">ISBN</label>
+                                <input type="text" class="form-control" id="isbn" name="isbn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="publicationYear" class="required">Publication Year</label>
+                                <input type="number" class="form-control" id="publicationYear" 
+                                       name="publicationYear" min="1800" max="2025" required>
+                            </div>
+                        <% } %>
+
+                        <% if (type.Type_Name === 'Electronics' || type.Type_Name === 'Clothing' || type.Type_Name === 'Home & Garden') { %>
+                            <div class="form-group">
+                                <label for="brand" class="required">Brand</label>
+                                <input type="text" class="form-control" id="brand" name="brand" required>
+                            </div>
+                        <% } %>
+
+                        <% if (type.Type_Name === 'Electronics') { %>
+                            <div class="form-group">
+                                <label for="model" class="required">Model</label>
+                                <input type="text" class="form-control" id="model" name="model" required>
+                            </div>
+                        <% } %>
+
+                        <% if (type.Type_Name === 'Clothing') { %>
+                            <div class="form-group">
+                                <label for="size">Size</label>
+                                <input type="text" class="form-control" id="size" name="size" 
+                                       placeholder="e.g., S, M, L, XL">
+                            </div>
+                            <div class="form-group">
+                                <label for="color">Color</label>
+                                <input type="text" class="form-control" id="color" name="color" 
+                                       placeholder="e.g., Blue, Red, Black">
+                            </div>
+                            <div class="form-group">
+                                <label for="material">Material</label>
+                                <input type="text" class="form-control" id="material" name="material" 
+                                       placeholder="e.g., Cotton, Polyester, Wool">
+                            </div>
+                        <% } %>
+
+                        <div class="form-group">
+                            <label for="description-<%= type.Type_ID %>" class="required">Description</label>
+                            <textarea class="form-control" id="description-<%= type.Type_ID %>" 
+                                     name="description" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specification-<%= type.Type_ID %>" class="required">Specifications</label>
+                            <textarea class="form-control" id="specification-<%= type.Type_ID %>" 
+                                     name="specification" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price-<%= type.Type_ID %>" class="required">Price ($)</label>
+                            <input type="number" class="form-control" id="price-<%= type.Type_ID %>" 
+                                   name="price" step="0.01" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stock-<%= type.Type_ID %>" class="required">Stock</label>
+                            <input type="number" class="form-control" id="stock-<%= type.Type_ID %>" 
+                                   name="stock" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productImage-<%= type.Type_ID %>" class="required">Product Image</label>
+                            <div class="file-upload">
+                                <label class="file-upload-label" for="productImage-<%= type.Type_ID %>">
+                                    <i class="fas fa-cloud-upload-alt"></i> Choose Image
+                                </label>
+                                <input type="file" class="form-control" id="productImage-<%= type.Type_ID %>" 
+                                       name="productImage" accept="image/*" required 
+                                       onchange="previewImage(this, 'imagePreview-<%= type.Type_ID %>')">
+                            </div>
+                            <img id="imagePreview-<%= type.Type_ID %>" class="image-preview" alt="Preview">
+                        </div>
+
+                        <div class="button-container">
+                            <button type="submit" class="submit-btn">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Image preview function
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Form validation
+        (function () {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+</body>
+</html>

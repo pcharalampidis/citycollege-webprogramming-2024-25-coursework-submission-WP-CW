@@ -1,0 +1,98 @@
+.order-details-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.order-sections {
+    display: grid;
+    gap: 20px;
+}
+
+.section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.info-item label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.product-card {
+    display: flex;
+    gap: 20px;
+}
+
+.product-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.price-info {
+    margin-top: 15px;
+    display: grid;
+    gap: 10px;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.status-pending { background: #ffd700; }
+.status-processing { background: #87ceeb; }
+.status-shipped { background: #98fb98; }
+.status-delivered { background: #90ee90; }
+.status-cancelled { background: #ff6b6b; }
+
+.status-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-card {
+        flex-direction: column;
+    }
+    
+    .product-image {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .status-form {
+        flex-direction: column;
+    }
+    
+    .status-form select,
+    .status-form button {
+        width: 100%;
+    }
+}

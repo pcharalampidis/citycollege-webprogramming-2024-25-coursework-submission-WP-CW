@@ -1,0 +1,148 @@
+<!-- Store Reviews Section -->
+<div class="reviews-section store-reviews">
+    <!-- Review Summary -->
+    <div class="review-summary">
+        <div class="rating-overview">
+            <div class="average-rating"><%= stats.averageRating.toFixed(1) %></div>
+            <div class="rating-stars">
+                <% for(let i = 1; i <= 5; i++) { %>
+                    <i class="fas fa-star <%= i <= Math.round(stats.averageRating) ? 'filled' : '' %>"></i>
+                <% } %>
+            </div>
+            <div class="total-reviews"><%= stats.totalReviews %> store reviews</div>
+        </div>
+
+        <div class="rating-bars">
+            <% for(let i = 5; i >= 1; i--) { %>
+                <div class="rating-bar">
+                    <span class="star-label"><%= i %> stars</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: <%= (stats.ratingDistribution[i] / stats.totalReviews * 100) || 0 %>%"></div>
+                    </div>
+                    <span class="bar-count"><%= stats.ratingDistribution[i] %></span>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Review Actions -->
+    <div class="review-actions">
+        <% if (user && hasOrdered) { %>
+            <button class="write-review-btn" onclick="toggleStoreReviewForm()">
+                <i class="fas fa-star"></i> Review This Store
+            </button>
+        <% } else if (user) { %>
+            <div class="review-notice">
+                <i class="fas fa-info-circle"></i> You can review this store after making a purchase
+            </div>
+        <% } else { %>
+            <a href="/login" class="write-review-btn">
+                <i class="fas fa-sign-in-alt"></i> Login to Review
+            </a>
+        <% } %>
+    </div>
+
+    <!-- Store Review Form -->
+    <form id="storeReviewForm" class="review-form" onsubmit="submitStoreReview(event)">
+        <div class="star-rating">
+            <% for(let i = 5; i >= 1; i--) { %>
+                <input type="radio" id="storeStar<%= i %>" name="rating" value="<%= i %>" required>
+                <label for="storeStar<%= i %>"><i class="fas fa-star"></i></label>
+            <% } %>
+        </div>
+        <textarea 
+            class="review-textarea" 
+            name="comments" 
+            placeholder="Share your experience with this store..."
+            required
+            minlength="10"
+            maxlength="1000"
+        ></textarea>
+        <button type="submit" class="write-review-btn">
+            <i class="fas fa-paper-plane"></i> Submit Store Review
+        </button>
+    </form>
+
+    <!-- Review List -->
+    <div class="review-list">
+        <% reviews.forEach(review => { %>
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">
+                            <%= review.First_Name %> <%= review.Last_Name %>
+                        </span>
+                        <% if (review.Order_ID) { %>
+                            <span class="verified-badge">
+                                <i class="fas fa-check-circle"></i> Verified Purchase
+                            </span>
+                        <% } %>
+                        <span class="review-date">
+                            <%= new Date(review.Date).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                            }) %>
+                        </span>
+                    </div>
+                    <div class="review-rating">
+                        <% for(let i = 1; i <= 5; i++) { %>
+                            <i class="fas fa-star <%= i <= review.Rating ? 'filled' : '' %>"></i>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="review-content"><%= review.Comments %></div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<!-- Store Review JavaScript -->
+<script>
+function toggleStoreReviewForm() {
+    const form = document.getElementById('storeReviewForm');
+    form.classList.toggle('active');
+}
+
+function showSubmissionPopup() {
+    alert('Your review has been submitted!');
+}
+
+function refreshPage() {
+    setTimeout(() => {
+        location.reload();
+    }, 5000);
+}
+
+async function submitStoreReview(event) {
+    event.preventDefault();
+    const form = event.target;
+    const rating = form.rating.value;
+    const comments = form.comments.value;
+
+    try {
+        const response = await fetch('/api/store-reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                storeId: '<%= storeId %>',
+                orderId: '<%= orderId %>', // This should be passed from the store page
+                rating,
+                comments
+            })
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.error || 'Failed to submit store review');
+        }
+
+        showSubmissionPopup();
+        refreshPage();
+    } catch (error) {
+        alert(error.message);
+    }
+}
+</script>

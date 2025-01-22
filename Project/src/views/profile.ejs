@@ -1,0 +1,113 @@
+<%- contentFor('body') %>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">My Profile</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/user/profile" method="POST">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" 
+                                       value="<%= user.First_Name %>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" 
+                                       value="<%= user.Last_Name %>" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="<%= user.Email %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" 
+                                      rows="3"><%= user.Address %></textarea>
+                        </div>
+
+                        <% if (sellerData) { %>
+                            <hr>
+                            <h4 class="mb-3">Seller Information</h4>
+                            
+                            <div class="mb-3">
+                                <label for="shopName" class="form-label">Shop Name</label>
+                                <input type="text" class="form-control" id="shopName" name="shopName" 
+                                       value="<%= sellerData.Shop_Name %>" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="businessPhone" class="form-label">Business Phone</label>
+                                <input type="tel" class="form-control" id="businessPhone" name="businessPhone" 
+                                       value="<%= sellerData.Business_Phone %>" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="businessAddress" class="form-label">Business Address</label>
+                                <textarea class="form-control" id="businessAddress" name="businessAddress" 
+                                          rows="3" readonly><%= sellerData.Business_Address %></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="taxNumber" class="form-label">Tax Number</label>
+                                <input type="text" class="form-control" id="taxNumber" name="taxNumber" 
+                                       value="<%= sellerData.Tax_Number %>" readonly>
+                            </div>
+                        <% } %>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr>
+                    
+                    <div class="mt-4">
+                        <h4>Change Password</h4>
+                        <form action="/user/change-password" method="POST">
+                            <div class="mb-3">
+                                <label for="currentPassword" class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword" 
+                                       name="currentPassword" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" 
+                                       name="newPassword" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" 
+                                       name="confirmPassword" required>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-key me-2"></i>Change Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% if (typeof cssFiles === 'undefined') { %>
+    <% cssFiles = [] %>
+<% } %>
+<% cssFiles.push('user/profile') %>
+
+<% if (typeof jsFiles === 'undefined') { %>
+    <% jsFiles = [] %>
+<% } %>
+<% jsFiles.push('user/profile') %>

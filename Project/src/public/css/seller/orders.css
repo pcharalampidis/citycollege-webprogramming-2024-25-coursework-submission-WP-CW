@@ -1,0 +1,207 @@
+/* Import common styles */
+@import url('../shared/common.css');
+
+/* Seller Orders Page Styles */
+:root {
+    --primary-color: #2b0d63;
+    --primary-hover: #1f0947;
+    --secondary-color: #fbca1f;
+    --secondary-hover: #fbb91f;
+    --text-dark: #2b0d63;
+    --text-muted: #666;
+    --light-bg: #f8f8f8;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.orders-container {
+    padding: 2rem 0;
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Filter Section */
+.filter-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.filter-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-row select,
+.filter-row input {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.filter-row select:focus,
+.filter-row input:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(43, 13, 99, 0.1);
+}
+
+/* Orders Table */
+.orders-table-wrapper {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.orders-table th {
+    background-color: var(--light-bg);
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+}
+
+.orders-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.orders-table tbody tr {
+    transition: background-color 0.3s;
+}
+
+.orders-table tbody tr:hover {
+    background-color: var(--light-bg);
+}
+
+/* Order Status */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.status-badge:hover {
+    transform: scale(1.05);
+}
+
+.status-pending { background: #fff3e0; color: #e65100; }
+.status-processing { background: #e3f2fd; color: #1565c0; }
+.status-completed { background: #e8f5e9; color: #4CAF50; }
+.status-cancelled { background: #fbe9e7; color: #F44336; }
+
+/* Action Buttons */
+.action-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 0.25rem;
+    font-weight: 500;
+}
+
+.view-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.view-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+}
+
+/* Search and Filter Section */
+.search-input {
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(43, 13, 99, 0.1);
+}
+
+.filter-select {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(43, 13, 99, 0.1);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.page-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.page-btn:hover,
+.page-btn.active {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .orders-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .filter-row {
+        flex-direction: column;
+    }
+}

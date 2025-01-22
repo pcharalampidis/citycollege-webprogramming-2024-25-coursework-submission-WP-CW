@@ -1,0 +1,77 @@
+<%- include('../partials/header') %>
+
+<link rel="stylesheet" href="/css/seller/settings.css">
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Store Settings</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/seller/settings/update" method="POST">
+                        <div class="mb-4">
+                            <h5>Store Information</h5>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label">Shop Name</label>
+                                <input type="text" class="form-control" name="shopName" 
+                                       value="<%= store.Shop_Name %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" name="description" rows="3"><%= store.Description %></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5>Contact Information</h5>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-control" name="phone" 
+                                       value="<%= store.Business_Phone %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" 
+                                       value="<%= store.Email %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" name="address" rows="2"><%= store.Business_Address %></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5>Store Status</h5>
+                            <hr>
+                            <div class="alert alert-<%= store.Verification_Status === 'verified' ? 'success' : 
+                                                      store.Verification_Status === 'pending' ? 'warning' : 'danger' %>">
+                                <strong>Verification Status:</strong> <%= store.Verification_Status %>
+                                <% if (store.Verification_Status === 'pending') { %>
+                                    <p class="mb-0 mt-2">
+                                        Your store is pending verification. We'll review your information and update your status soon.
+                                    </p>
+                                <% } %>
+                            </div>
+                            <p class="text-muted">
+                                Registration Date: <%= new Date(store.Registration_Date).toLocaleDateString() %>
+                            </p>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

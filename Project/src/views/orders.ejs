@@ -1,0 +1,119 @@
+<%- include('partials/layout') %>
+
+<%- contentFor('body') %>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Orders</h2>
+    </div>
+
+    <% if (orders.length === 0) { %>
+        <div class="alert alert-info mt-5">No orders found.</div>
+    <% } else { %>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Store</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(order => { %>
+                        <tr>
+                            <td>#<%= order.Order_ID %></td>
+                            <td><%= order.ProductName %></td>
+                            <td><%= order.StoreName || 'N/A' %></td>
+                            <td><%= order.Quantity %></td>
+                            <td>
+                                <span class="badge bg-<%= order.Status === 'Pending' ? 'warning' : 
+                                                        order.Status === 'Completed' ? 'success' : 
+                                                        order.Status === 'Cancelled' ? 'danger' : 'secondary' %>">
+                                    <%= order.Status %>
+                                </span>
+                            </td>
+                            <td><%= new Date(order.Date).toLocaleDateString() %></td>
+                            <td>
+                                <a href="/orders/<%= order.Order_ID %>" class="btn btn-info btn-sm">View</a>
+                                <% if (order.Status === 'Pending') { %>
+                                    <button class="btn btn-success btn-sm" onclick="updateOrderStatus(<%= order.Order_ID %>, 'Completed')">Complete</button>
+                                    <button class="btn btn-danger btn-sm" onclick="updateOrderStatus(<%= order.Order_ID %>, 'Cancelled')">Cancel</button>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- panogination lol this section is such a mess -->
+        <% if (totalPages > 1) { %>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <% if (currentPage > 1) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/orders?page=<%= currentPage - 1 %>">Previous</a>
+                        </li>
+                    <% } %>
+                    
+                    <% for(let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link" href="/orders?page=<%= i %>"><%= i %></a>
+                        </li>
+                    <% } %>
+                    
+                    <% if (currentPage < totalPages) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/orders?page=<%= currentPage + 1 %>">Next</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        <% } %>
+    <% } %>
+</div>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+</footer>
+
+<script>
+function updateOrderStatus(orderId, status) {
+    if (confirm(`Are you sure you want to mark this order as ${status}?`)) {
+        fetch(`/orders/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ Status: status })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to update order status');
+        });
+    }
+} //ta-da works including the scripts handling the cases 
+</script>
+
+<% if (typeof cssFiles === 'undefined') { %>
+    <% cssFiles = [] %>
+<% } %>
+<% cssFiles.push('user/orders') %>
+
+<% if (typeof jsFiles === 'undefined') { %>
+    <% jsFiles = [] %>
+<% } %>
+<% jsFiles.push('user/orders') %>

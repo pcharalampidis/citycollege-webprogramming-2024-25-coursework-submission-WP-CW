@@ -1,0 +1,69 @@
+<!-- Order Details Page -->
+<input type="hidden" id="orderId" value="<%- order.Order_ID %>">
+
+<div class="order-details-container">
+    <div class="order-header">
+        <h2>Order #<%- order.Order_ID %></h2>
+        <div class="order-meta">
+            <span class="date"><%- order.Date %></span>
+            <span class="status-badge status-<%- order.Status.toLowerCase() %>">
+                <%- order.Status %>
+            </span>
+        </div>
+    </div>
+
+    <div class="order-sections">
+        <!-- Customer Information -->
+        <div class="section customer-info">
+            <h3>Customer Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Name:</label>
+                    <span><%- order.First_Name %> <%- order.Last_Name %></span>
+                </div>
+                <div class="info-item">
+                    <label>Email:</label>
+                    <span><%- order.Email %></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Information -->
+        <div class="section product-info">
+            <h3>Product Details</h3>
+            <div class="product-card">
+                <% if (order.Image_URL) { %>
+                    <img src="<%- order.Image_URL %>" alt="<%- order.ProductName %>" class="product-image">
+                <% } %>
+                <div class="product-details">
+                    <h4><%- order.ProductName %></h4>
+                    <p class="description"><%- order.ProductDescription %></p>
+                    <div class="price-info">
+                        <div class="price">Unit Price: $<%= typeof order.Price === 'number' ? order.Price.toFixed(2) : '0.00' %></div>
+                        <div class="quantity">Quantity: <%= order.Quantity %></div>
+                        <div class="total">Total: $<%= typeof order.TotalPrice === 'number' ? order.TotalPrice.toFixed(2) : '0.00' %></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Status -->
+        <div class="section status-section">
+            <h3>Update Status</h3>
+            <div class="status-form">
+                <select id="orderStatus" class="form-control">
+                    <option value="Pending" <%- order.Status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                    <option value="Processing" <%- order.Status === 'Processing' ? 'selected' : '' %>>Processing</option>
+                    <option value="Shipped" <%- order.Status === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                    <option value="Delivered" <%- order.Status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                    <option value="Cancelled" <%- order.Status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                </select>
+                <button id="updateStatus" class="btn btn-primary">Update Status</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Link CSS and JS files -->
+<link rel="stylesheet" href="/css/sellerorder-details.css">
+<script src="/js/sellerorder-details.js"></script>

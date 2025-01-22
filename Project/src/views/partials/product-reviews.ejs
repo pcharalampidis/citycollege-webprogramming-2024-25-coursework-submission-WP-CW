@@ -1,0 +1,63 @@
+<!-- Product Reviews Section -->
+<div class="reviews-section">
+    <!-- Review Summary -->
+    <div class="review-summary">
+        <div class="rating-overview">
+            <div class="average-rating"><%= stats.averageRating.toFixed(1) %></div>
+            <div class="rating-stars">
+                <% for(let i = 1; i <= 5; i++) { %>
+                    <i class="fas fa-star <%= i <= Math.round(stats.averageRating) ? 'filled' : '' %>"></i>
+                <% } %>
+            </div>
+            <div class="total-reviews"><%= stats.totalReviews %> reviews</div>
+        </div>
+
+        <div class="rating-bars">
+            <% for(let i = 5; i >= 1; i--) { %>
+                <div class="rating-bar">
+                    <span class="star-label"><%= i %> stars</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: <%= (stats.ratingDistribution[i] / stats.totalReviews * 100) || 0 %>%"></div>
+                    </div>
+                    <span class="bar-count"><%= stats.ratingDistribution[i] %></span>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Review List -->
+    <div class="review-list">
+        <% reviews.forEach(review => { %>
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">
+                            <%= review.First_Name %> <%= review.Last_Name %>
+                        </span>
+                        <% if (review.Order_ID) { %>
+                            <span class="verified-badge">
+                                <i class="fas fa-check-circle"></i> Verified Purchase
+                            </span>
+                        <% } %>
+                        <span class="review-date">
+                            <%= new Date(review.Date).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                            }) %>
+                        </span>
+                    </div>
+                    <div class="review-rating">
+                        <% for(let i = 1; i <= 5; i++) { %>
+                            <i class="fas fa-star <%= i <= review.Rating ? 'filled' : '' %>"></i>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="review-content"><%= review.Comments %></div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<!-- Review JavaScript -->
+<script src="/js/product-reviews.js"></script>

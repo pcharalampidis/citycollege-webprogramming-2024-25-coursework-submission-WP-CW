@@ -1,0 +1,91 @@
+/* Product Tabs Styling */
+:root {
+    --primary-color: #2b0d63;
+    --primary-hover: #1f0947;
+    --secondary-color: #fbca1f;
+    --secondary-hover: #fbb91f;
+    --text-dark: #2b0d63;
+    --text-muted: #666;
+    --light-bg: #f8f8f8;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.product-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.product-tab {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.product-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.product-tab:hover {
+    color: var(--secondary-color);
+}
+
+.product-tab:hover::after {
+    background-color: var(--secondary-color);
+}
+
+.product-tab.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.product-tab.active::after {
+    background-color: var(--primary-color);
+}
+
+/* Category Pills */
+.category-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.category-pill {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+.category-pill:hover {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.category-pill.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}

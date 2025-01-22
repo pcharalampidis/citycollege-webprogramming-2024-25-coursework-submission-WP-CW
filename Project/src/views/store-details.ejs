@@ -1,0 +1,67 @@
+<%- include('partials/header') %>
+
+<div class="container">
+    <div class="store-details">
+        <div class="store-header">
+            <h1><%= store.Name %></h1>
+            <div class="store-rating">
+                <% for(let i = 1; i <= 5; i++) { %>
+                    <i class="fas fa-star <%= i <= Math.round(stats.averageRating) ? 'filled' : '' %>"></i>
+                <% } %>
+                <span class="rating-text">(<%= stats.totalReviews %> reviews)</span>
+            </div>
+        </div>
+
+        <div class="store-info">
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span><%= store.Address %></span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span><%= store.Phone %></span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span><%= store.Email %></span>
+            </div>
+        </div>
+
+        <div class="store-description">
+            <h2>About the Store</h2>
+            <p><%= store.Description %></p>
+        </div>
+
+        <div class="store-products">
+            <h2>Products from this Store</h2>
+            <div class="product-grid">
+                <% products.forEach(product => { %>
+                    <div class="product-card">
+                        <img src="<%= product.Image_URL %>" alt="<%= product.Name %>">
+                        <div class="product-info">
+                            <h3><%= product.Name %></h3>
+                            <p class="price">€<%= product.Price.toFixed(2) %></p>
+                            <% if (product.Stock > 0) { %>
+                                <span class="stock in-stock">In Stock (<%= product.Stock %>)</span>
+                            <% } else { %>
+                                <span class="stock out-of-stock">Out of Stock</span>
+                            <% } %>
+                            <a href="/products/<%= product.Product_ID %>" class="view-btn">View Details</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+
+        <!-- Include store reviews section -->
+        <%- include('partials/store-reviews', { 
+            storeId: store.Store_ID,
+            stats: stats,
+            reviews: reviews,
+            user: user,
+            hasOrdered: hasOrdered
+        }) %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

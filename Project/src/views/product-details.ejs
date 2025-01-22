@@ -1,0 +1,228 @@
+<div class="container mt-5">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-5">
+            <% if (product.Image_URL) { %>
+                <img src="<%= product.Image_URL %>" alt="<%= product.Name %>" class="img-fluid rounded shadow">
+            <% } else { %>
+                <div class="placeholder-image bg-light d-flex align-items-center justify-content-center rounded shadow" style="height: 400px;">
+                    <i class="fas fa-image fa-3x text-secondary"></i>
+                </div>
+            <% } %>
+        </div>
+
+        <!-- Product Information -->
+        <div class="col-md-7">
+            <h1 class="mb-3"><%= product.Name %></h1>
+            
+            <% if (product.AuthorName) { %>
+                <p class="text-muted">By <%= product.AuthorName %></p>
+            <% } %>
+
+            <div class="mb-4">
+                <h5>Product Details</h5>
+                <ul class="list-unstyled">
+                    <% if (product.ProductType) { %>
+                        <li><strong>Type:</strong> <%= product.ProductType %></li>
+                    <% } %>
+                    <% if (product.CategoryName) { %>
+                        <li><strong>Category:</strong> <%= product.CategoryName %></li>
+                    <% } %>
+                    <% if (product.Brand) { %>
+                        <li><strong>Brand:</strong> <%= product.Brand %></li>
+                    <% } %>
+                    <% if (product.Model) { %>
+                        <li><strong>Model:</strong> <%= product.Model %></li>
+                    <% } %>
+                    <% if (product.ISBN) { %>
+                        <li><strong>ISBN:</strong> <%= product.ISBN %></li>
+                    <% } %>
+                    <% if (product.Publication_Year) { %>
+                        <li><strong>Publication Year:</strong> <%= product.Publication_Year %></li>
+                    <% } %>
+                </ul>
+            </div>
+
+            <% if (product.Description) { %>
+                <div class="mb-4">
+                    <h5>Description</h5>
+                    <p><%= product.Description %></p>
+                </div>
+            <% } %>
+
+            <% if (product.Specification) { %>
+                <div class="mb-4">
+                    <h5>Specifications</h5>
+                    <p><%= product.Specification %></p>
+                </div>
+            <% } %>
+
+            <!-- Store Availability -->
+            <div class="mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Available at Stores</h5>
+                    <select id="storeSortSelect" class="form-select form-select-sm" style="width: auto;">
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="name_asc">Store Name: A to Z</option>
+                        <option value="name_desc">Store Name: Z to A</option>
+                        <option value="stock_desc">Stock: High to Low</option>
+                        <option value="rating_desc">Rating: High to Low</option>
+                    </select>
+                </div>
+                <% if (product.stores && product.stores.length > 0) { %>
+                    <div class="list-group" id="storesList">
+                        <% product.stores.forEach(function(store) { %>
+                            <div class="list-group-item store-item" 
+                                 data-store-id="<%= store.store_id %>"
+                                 data-price="<%= store.price %>"
+                                 data-name="<%= store.store_name %>"
+                                 data-stock="<%= store.stock %>"
+                                 data-rating="<%= store.rating %>">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1"><%= store.store_name %></h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-map-marker-alt"></i> <%= store.address %>
+                                            <% if (store.rating) { %>
+                                                <span class="ms-2">
+                                                    <i class="fas fa-star text-warning"></i> <%= store.rating.toFixed(1) %>
+                                                </span>
+                                            <% } %>
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <h5 class="mb-1">$<%= store.price.toFixed(2) %></h5>
+                                        <small class="text-<%= store.stock > 0 ? 'success' : 'danger' %>">
+                                            <%= store.stock > 0 ? `${store.stock} in stock` : 'Out of stock' %>
+                                        </small>
+                                        <% if (store.stock > 0) { %>
+                                            <button class="btn btn-primary btn-sm mt-2"
+                                                onclick="addToCart('<%= product.Product_ID %>', '<%= product.Name %>', <%= store.price %>, '<%= product.Image_URL || '/images/placeholder.jpg' %>', 1, '<%= store.store_id %>')"
+                                                <%= store.stock <= 0 ? 'disabled' : '' %>>
+                                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                                            </button>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <div class="alert alert-warning">
+                        No stores available for this product.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Author Information (if available) -->
+    <% if (product.AuthorName && product.AuthorBio) { %>
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">About the Author</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= product.AuthorName %></h6>
+                        <% if (product.AuthorBirthYear) { %>
+                            <p class="text-muted">
+                                <%= product.AuthorBirthYear %>
+                                <% if (product.AuthorDeathYear) { %>
+                                    - <%= product.AuthorDeathYear %>
+                                <% } %>
+                            </p>
+                        <% } %>
+                        <p class="card-text"><%= product.AuthorBio %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<!-- Reviews Section -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h3 class="mb-4">Customer Reviews</h3>
+        
+        <!-- Review Summary -->
+        <div class="review-summary mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center">
+                    <div class="overall-rating">
+                        <h4 class="mb-0"><%= stats.average_rating ? Number(stats.average_rating).toFixed(1) : '0.0' %></h4>
+                        <div class="stars">
+                            <% for(let i = 1; i <= 5; i++) { %>
+                                <i class="fas fa-star <%= i <= stats.average_rating ? 'text-warning' : 'text-muted' %>"></i>
+                            <% } %>
+                        </div>
+                        <p class="text-muted"><%= stats.total_reviews %> reviews</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="rating-bars">
+                        <% [5,4,3,2,1].forEach(stars => { %>
+                            <div class="rating-bar mb-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2"><%= stars %> stars</span>
+                                    <div class="progress flex-grow-1" style="height: 8px;">
+                                        <% const percentage = stats.total_reviews ? (stats[stars + '_star'] / stats.total_reviews * 100) : 0; %>
+                                        <div class="progress-bar bg-warning" style="width: <%= percentage %>%"></div>
+                                    </div>
+                                    <span class="ms-2"><%= stats[stars + '_star'] || 0 %></span>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-list">
+            <% if (reviews && reviews.length > 0) { %>
+                <% reviews.forEach(review => { %>
+                    <div class="review-item card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h5 class="mb-1"><%= review.First_Name %> <%= review.Last_Name %></h5>
+                                    <div class="stars">
+                                        <% for(let i = 1; i <= 5; i++) { %>
+                                            <i class="fas fa-star <%= i <= review.Rating ? 'text-warning' : 'text-muted' %>"></i>
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <small class="text-muted">
+                                    <%= new Date(review.Date).toLocaleDateString() %>
+                                </small>
+                            </div>
+                            <p class="mb-0"><%= review.Comments %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="text-center text-muted">
+                    <i class="fas fa-comment-slash fa-2x mb-3"></i>
+                    <p>No reviews yet</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- Load Bootstrap JS first -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Add custom scripts -->
+<% if (user && userCanReview) { %>
+    <script src="/js/product-reviews.js"></script>
+<% } %>
+
+<!-- Cart functionality -->
+<script src="/js/cart.js"></script>
+
+<!-- Product details script -->
+<script src="/js/user/product-details.js"></script>
+</div>

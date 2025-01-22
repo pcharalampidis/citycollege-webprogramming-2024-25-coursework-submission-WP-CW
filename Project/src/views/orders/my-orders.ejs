@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+    <h2 class="mb-4">My Orders</h2>
+    
+    <% if (orders && orders.length > 0) { %>
+        <div class="row">
+            <% orders.forEach(order => { %>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="card-title mb-1"><%= order.ProductName %></h5>
+                                    <p class="text-muted mb-0">Order #<%= order.Order_ID %></p>
+                                </div>
+                                <span class="badge <%= order.Status === 'Pending' ? 'bg-warning' : 
+                                                     order.Status === 'Processing' ? 'bg-info' :
+                                                     order.Status === 'Shipped' ? 'bg-primary' :
+                                                     order.Status === 'Delivered' ? 'bg-success' : 'bg-danger' %>">
+                                    <%= order.Status %>
+                                </span>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <img src="<%= order.Image_URL %>" alt="<%= order.ProductName %>" 
+                                         class="img-fluid rounded" style="max-height: 100px; object-fit: cover;">
+                                </div>
+                                <div class="col-8">
+                                    <p class="mb-1"><strong>Store:</strong> <%= order.StoreName %></p>
+                                    <p class="mb-1"><strong>Quantity:</strong> <%= order.Quantity %></p>
+                                    <p class="mb-1"><strong>Total:</strong> $<%= order.Total_Amount.toFixed(2) %></p>
+                                    <p class="mb-0"><strong>Date:</strong> <%= order.Date %></p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="/orders/<%= order.Order_ID %>" class="btn btn-outline-primary">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <div class="alert alert-info">
+            <p class="mb-0">You don't have any orders yet. <a href="/products">Start shopping</a></p>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

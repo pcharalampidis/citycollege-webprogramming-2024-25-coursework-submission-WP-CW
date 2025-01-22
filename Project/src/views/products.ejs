@@ -1,0 +1,157 @@
+<%- contentFor('body') %>
+<div class="container mt-4">
+    <h1 class="products-title">GoodsPapi <span>Products</span></h1>
+
+    <!-- Search and Filter Form -->
+    <div class="filter-container">
+        <form class="search-sort" onsubmit="return false;">
+            <input type="text" class="search-input" name="search" placeholder="Search products..." 
+                   value="<%= filters.search || '' %>">
+            <select class="sort-select" name="sort">
+                <option value="name_asc" <%= filters.sort === 'name_asc' ? 'selected' : '' %>>Name (A-Z)</option>
+                <option value="name_desc" <%= filters.sort === 'name_desc' ? 'selected' : '' %>>Name (Z-A)</option>
+                <option value="price_asc" <%= filters.sort === 'price_asc' ? 'selected' : '' %>>Price (Low-High)</option>
+                <option value="price_desc" <%= filters.sort === 'price_desc' ? 'selected' : '' %>>Price (High-Low)</option>
+            </select>
+            <button type="button" class="filter-dropdown-btn">Additional Filters</button>
+            <button type="button" class="apply-filters">Apply Filters</button>
+        </form>
+
+        <!-- Additional Filters Dropdown -->
+        <div class="additional-filters">
+            <div class="filter-grid">
+                <!-- Product Type Filter -->
+                <div class="filter-group">
+                    <label>Product Type</label>
+                    <select class="filter-select" name="type">
+                        <option value="">All Types</option>
+                        <% productTypes.forEach(type => { %>
+                            <option value="<%= type.Type_ID %>" 
+                                    <%= filters.type == type.Type_ID ? 'selected' : '' %>>
+                                <%= type.Type_Name %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <!-- Brand Filter -->
+                <div class="filter-group">
+                    <label>Brand</label>
+                    <input type="text" class="filter-input" name="brand" placeholder="Enter brand name"
+                           value="<%= filters.brand || '' %>">
+                </div>
+
+                <!-- Price Range -->
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <div class="price-range">
+                        <input type="number" class="filter-input" name="minPrice" placeholder="Min Price"
+                               value="<%= filters.minPrice || '' %>">
+                        <span>to</span>
+                        <input type="number" class="filter-input" name="maxPrice" placeholder="Max Price"
+                               value="<%= filters.maxPrice || '' %>">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="categories-nav">
+            <a href="/products" class="category-link <%= !filters.category ? 'active' : '' %>">ALL</a>
+            <% if (locals.categories) { %>
+                <% categories.forEach(category => { %>
+                    <a href="/products?category=<%= category.Name_Type %>" 
+                       class="category-link <%= filters.category === category.Name_Type ? 'active' : '' %>">
+                        <%= category.Name_Type.toUpperCase() %>
+                    </a>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Results Summary -->
+    <div class="mb-3">
+        <% if (filters.search || filters.type || filters.category || filters.brand || filters.minPrice || filters.maxPrice) { %>
+            <p>Found <%= filteredCount %> products out of <%= totalProducts %> total</p>
+        <% } else { %>
+            <p>Showing all <%= totalProducts %> products</p>
+        <% } %>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-filter">
+        <% products.forEach(product => { %>
+            <div class="row-pro-filter">
+                <div class="product-image">
+                    <a href="/products/<%= product.Product_ID %>">
+                        <img src="<%= product.Image_URL || '/images/placeholder.jpg' %>" 
+                             alt="<%= product.Name %>">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><%= product.Name %></h3>
+                    <p class="product-description"><%= product.Specification %></p>
+                    <div class="price-container">
+                        <% if (product.MinPrice > 0) { %>
+                            <span class="new-price">$<%= Number(product.MinPrice).toFixed(2) %></span>
+                        <% } %>
+                    </div>
+                    <div class="button-container">
+                        <% if (product.MinPrice > 0 && product.TotalStock > 0) { %>
+                            <button type="button" 
+                                    class="add-btn" 
+                                    onclick="addToCart('<%= product.Product_ID %>', '<%= product.Name %>', <%= Number(product.MinPrice).toFixed(2) %>, '<%= product.Image_URL || '/images/placeholder.jpg' %>', 1, '<%= product.BestStoreID %>')"
+                                    data-product-id="<%= product.Product_ID %>"
+                                    data-product-name="<%= product.Name %>"
+                                    data-price="<%= Number(product.MinPrice).toFixed(2) %>"
+                                    data-image="<%= product.Image_URL || '/images/placeholder.jpg' %>"
+                                    data-store-id="<%= product.BestStoreID %>">
+                                Add to Cart
+                            </button>
+                        <% } %>
+                        <a href="/products/<%= product.Product_ID %>" class="detail-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <!-- Pagination Controls -->
+    <% if (pagination.totalPages > 1) { %>
+        <div class="pagination">
+            <% if (pagination.hasPrevPage) { %>
+                <a href="?page=<%= pagination.prevPage %>&<%= new URLSearchParams({...filters, page: undefined}).toString() %>" 
+                   class="pagination-btn">&laquo; Previous</a>
+            <% } %>
+            
+            <% pagination.pages.forEach(pageNum => { %>
+                <a href="?page=<%= pageNum %>&<%= new URLSearchParams({...filters, page: undefined}).toString() %>" 
+                   class="pagination-btn <%= pageNum === pagination.currentPage ? 'active' : '' %>">
+                    <%= pageNum %>
+                </a>
+            <% }); %>
+            
+            <% if (pagination.hasNextPage) { %>
+                <a href="?page=<%= pagination.nextPage %>&<%= new URLSearchParams({...filters, page: undefined}).toString() %>" 
+                   class="pagination-btn">Next &raquo;</a>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
+<!-- Add BoxIcons CSS for star ratings -->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<% if (typeof cssFiles === 'undefined') { %>
+    <% cssFiles = [] %>
+<% } %>
+<% cssFiles.push('products') %>
+<% cssFiles.push('cart') %>
+
+<% if (typeof jsFiles === 'undefined') { %>
+    <% jsFiles = [] %>
+<% } %>
+<% jsFiles.push('cart') %>
+<% jsFiles.push('productFilters') %>
+
+<!-- Add the filter handling JavaScript -->
+<script src="/js/productFilters.js"></script>

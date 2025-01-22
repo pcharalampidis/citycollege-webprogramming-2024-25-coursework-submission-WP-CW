@@ -1,0 +1,84 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/LOGO.png" alt="Logo" height="30">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <% if (locals.user && user.isSeller) { %>
+                        <a class="nav-link" href="/seller/dashboard">Home</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/dashboard">Home</a>
+                    <% } %>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+            </ul>
+            
+            <!-- Centered Search Form -->
+            <form class="d-flex search-form" action="/search" method="GET">
+                <div class="input-group">
+                    <input class="form-control" type="search" name="q" placeholder="Search products..." aria-label="Search">
+                    <button class="btn btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <ul class="navbar-nav ms-auto">
+                <% if (locals.user && user) { %>
+                    <!-- Shopping Cart -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link position-relative" href="#" id="cart-icon" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+                                  style="display: none;">0</span>
+                        </a>
+                        <div id="shopping-cart" class="dropdown-menu dropdown-menu-end p-0" style="width: 320px;">
+                            <div class="cart-header p-3 bg-light border-bottom">
+                                <h6 class="m-0">Shopping Cart</h6>
+                            </div>
+                            <div class="cart-items" style="max-height: 300px; overflow-y: auto;">
+                                <!-- Cart items will be dynamically loaded here -->
+                            </div>
+                            <div class="cart-footer p-3 border-top">
+                                <a href="/cart" class="btn btn-primary w-100">View Cart</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>
+                            <%= user.First_Name %>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/orders">My Orders</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>
